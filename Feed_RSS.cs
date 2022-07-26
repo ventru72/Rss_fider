@@ -9,6 +9,7 @@ using System.Net;
 using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Rss;
 using System.IO;
+using System.Text.RegularExpressions;
 //Install-Package Microsoft.SyndicationFeed.ReaderWriter -Version 1.0.2
 //
 namespace RSS_Fider
@@ -59,6 +60,15 @@ namespace RSS_Fider
                 return feed_RSS_setting;
             }
         }
+        public static string StripHTML(string input)
+        {
+            return Regex.Replace(input, "<.*?>", String.Empty);
+        }
+        public string SubDiscription(string str)
+        {
+           string result_str = str.Substring(3,str.IndexOf("<", 3));
+           return result_str;
+        }   
         public  async Task<List<Instance_Feed>>  GetNewsFeed()
         {
              Feed_RSS feed_RSS_setting = Deser();
@@ -83,8 +93,10 @@ namespace RSS_Fider
                         {
                             Instance_Feed rssItem = new Instance_Feed();
                             ISyndicationItem item = await feedReader.ReadItem();
-                            rssItem.Discription_News = item.Description;
-                            rssItem.Title = item.Title;
+                            
+                            rssItem.Discription_News = StripHTML(item.Description);
+                        //  rssItem.Discription_News = SubDiscription(item.Description);
+                        rssItem.Title = item.Title;
                             rssItem.Uri = item.Id;
                             rssItem.PublishDate = item.Published;
                             rssNewsItems.Add(rssItem);
