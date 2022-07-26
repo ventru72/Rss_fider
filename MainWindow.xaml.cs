@@ -28,83 +28,40 @@ namespace RSS_Fider
     public partial class MainWindow : Window
     {
         ObservableCollection<Worker> workers_l = new ObservableCollection<Worker>();
-        ObservableCollection<Instance_Feed> instance_feed = new ObservableCollection<Instance_Feed>();
+        ObservableCollection<Instance_Feed> feed_l = new ObservableCollection<Instance_Feed>();
         int count = 0;
 
         public MainWindow()
         {
             InitializeComponent();
             //listRss.ItemsSource = workers_l;
-            listRss.ItemsSource = instance_feed;
+            listRss.ItemsSource = feed_l;
+
         }
-        public void Fid()
-        {
-            //SyndicationFeed feed = new SyndicationFeed();
-            ////Название, которое будет видно в любой читалке
-            //feed.Title = new TextSyndicationContent("Мой тестовый RSS фид.");
-            ////Блок копирайтов
-            //feed.Copyright = new TextSyndicationContent(" 2008");
-            ////Описание и название генератора фида.
-            //feed.Description = new TextSyndicationContent("Автоматически сгенерированый фид");
-            //feed.Generator = "Maxter's RSS Feed Generator";
-            ////Ну и ссылка на источник
-            //SyndicationLink link = new SyndicationLink();
-            //link.Title = "Habr.ru";
-            //link.Uri = new Uri("habrahabr.ru");
-            //feed.Links.Add(link);
-
-            //SyndicationItem item = new SyndicationItem();
-
-            //item.Id = Guid.NewGuid().ToString();
-            //item.Title = new TextSyndicationContent("Привет, ХабраХабр!");
-            //item.Summary = new TextSyndicationContent("Тут идет короткое описание");
-            //item.Content = new TextSyndicationContent("А тут полный текст");
-
-            ////добавление записи к фиду
-            //List<SyndicationItem> items = new List<SyndicationItem>();
-            //items.Add(item);
-            //feed.Items = items;
-
-            ////Ну а теперь выбираем формат фида и сеарилизуем его. Пускай это будет RSS 2.0:
-            //Response.Clear();
-            //Response.ContentEncoding = System.Text.Encoding.UTF8;
-            //Response.ContentType = "text / xml";
-
-            //XmlWriter rssWriter = XmlWriter.Create(Response.Output);
-            //Rss20FeedFormatter rssFormatter = new Rss20FeedFormatter(feed);
-            //rssFormatter.WriteTo(rssWriter);
-            //rssWriter.Close();
-
-            //Response.End();
-        }
-
+       
 
         public void Output_Rss( ref List<Instance_Feed> list_rss)
         {
             foreach (Instance_Feed i in list_rss)
             {
-                instance_feed.Add(i);
+                feed_l.Add(i);
             }
             
         }
-        public void Start_Rss_Fider()
+       
+        
+       
+        private async void button_start_rss_fider_Click(object sender, RoutedEventArgs e)
         {
             Feed_RSS newsFeedService = new Feed_RSS("https://habr.com/rss/interesting/");
-            newsFeedService.GetNewsFeed();
-        }
-        
+            var result = await newsFeedService.GetNewsFeed();
 
+             foreach (var i in result)
+            {
+                feed_l.Add(i);
+            }
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            string dfdf= string.Empty;
-            String.IsNullOrEmpty(dfdf);
-            MessageBox.Show("Арарарар");
-        }
-       
-        private void button_start_rss_fider_Click(object sender, RoutedEventArgs e)
-        {   
-            Start_Rss_Fider();
+            int fdf = feed_l.Count;
             Worker worker = new Worker();
             worker.First_Name = $"Имя{++count}";
             worker.Age = count + 10;

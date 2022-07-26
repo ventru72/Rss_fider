@@ -27,9 +27,10 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding PublishDate}"/>
+                        <TextBlock Text="{Binding PublishDate} "/>
                         <TextBlock Text="{Binding Title}"/>
-                         
+                        <!--<TextBlock Text="{Binding First_Name}"/>
+                        <TextBlock Text="{Binding Age}"/>-->
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

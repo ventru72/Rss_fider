@@ -59,7 +59,7 @@ namespace RSS_Fider
                 return feed_RSS_setting;
             }
         }
-        public async Task  GetNewsFeed()
+        public  async Task<List<Instance_Feed>>  GetNewsFeed()
         {
              Feed_RSS feed_RSS_setting = Deser();
             if (feed_RSS_setting.Update == 0) feed_RSS_setting.Update = 1;
@@ -73,9 +73,7 @@ namespace RSS_Fider
             List<Instance_Feed> rssNewsItems = new List<Instance_Feed>();
             MainWindow mainWindow = new MainWindow();
             bool exit = false;
-            while (exit != true)
-            {
-                using (XmlReader xmlReader = XmlReader.Create(Feed_Uri, new XmlReaderSettings() { Async = true }))
+              using (XmlReader xmlReader = XmlReader.Create(Feed_Uri, new XmlReaderSettings() { Async = true }))
                 {
 
                     RssFeedReader feedReader = new RssFeedReader(xmlReader);
@@ -92,10 +90,55 @@ namespace RSS_Fider
                             rssNewsItems.Add(rssItem);
                         }
                     }
+                return rssNewsItems;
                 }
-                mainWindow.Output_Rss(ref rssNewsItems);
-                await Task.Delay(feed_RSS_setting.Update * 3600);
-            }
+            
+                //mainWindow.Output_Rss(ref rssNewsItems);
+                 
+           
         }
     }
 }
+
+
+
+
+
+//public async Task GetNewsFeed()
+//{
+//    Feed_RSS feed_RSS_setting = Deser();
+//    if (feed_RSS_setting.Update == 0) feed_RSS_setting.Update = 1;
+
+//    WebProxy wp = new WebProxy(feed_RSS_setting.Proxy_Ip, true);
+//    wp.Credentials = new NetworkCredential(feed_RSS_setting.Proxy_User, feed_RSS_setting.Proxy_Password);
+//    WebRequest wrq = WebRequest.Create("http://www.example.com");
+//    wrq.Proxy = wp;
+//    //WebResponse wrs = wrq.GetResponse();
+
+//    List<Instance_Feed> rssNewsItems = new List<Instance_Feed>();
+//    MainWindow mainWindow = new MainWindow();
+//    bool exit = false;
+//    while (exit != true)
+//    {
+//        using (XmlReader xmlReader = XmlReader.Create(Feed_Uri, new XmlReaderSettings() { Async = true }))
+//        {
+
+//            RssFeedReader feedReader = new RssFeedReader(xmlReader);
+//            while (await feedReader.Read())
+//            {
+//                if (feedReader.ElementType == SyndicationElementType.Item)
+//                {
+//                    Instance_Feed rssItem = new Instance_Feed();
+//                    ISyndicationItem item = await feedReader.ReadItem();
+//                    rssItem.Discription_News = item.Description;
+//                    rssItem.Title = item.Title;
+//                    rssItem.Uri = item.Id;
+//                    rssItem.PublishDate = item.Published;
+//                    rssNewsItems.Add(rssItem);
+//                }
+//            }
+//        }
+//        mainWindow.Output_Rss(ref rssNewsItems);
+//        await Task.Delay(feed_RSS_setting.Update * 3600);
+//    }
+//}
