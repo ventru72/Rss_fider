@@ -26,12 +26,14 @@
                  HorizontalAlignment="Center" Grid.RowSpan="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
+                    
                     <StackPanel Orientation="Vertical" >
                         <TextBlock   Text="{Binding PublishDate}" FontSize="16" Foreground="#FF00FF90"/>
                         <TextBlock Text="{Binding Title}" FontSize="16" Foreground="#FF040E44"/>
-                        <TextBlock TextWrapping="Wrap"  Text="{Binding Discription_News}"/>
-                        <!--<TextBlock Text="{Binding First_Name}"/>
-                        <TextBlock Text="{Binding Age}"/>-->
+                        <TextBlock TextWrapping="Wrap" 
+                                   MaxWidth="920"
+                                   Text="{Binding Discription_News}"/>
+                       
                     </StackPanel>
                 </DataTemplate>
                 
