@@ -38,36 +38,44 @@ namespace RSS_Fider
             InitializeComponent();
             //listRss.ItemsSource = workers_l;
             listRss.ItemsSource = feed_l;
-
+            
         }
-       
+
 
         void hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(link); //открытие ссылки в браузере
+            string path = (sender as Hyperlink).Tag as string;
+            Process.Start(path); //открытие ссылки в браузере
 
         }
         private async void button_start_rss_fider_Click(object sender, RoutedEventArgs e)
         {
+            Feed_RSS feed_RSS_setting = new Feed_RSS();
+            feed_RSS_setting = feed_RSS_setting.Deser();
+            bool exit = false;
             Feed_RSS newsFeedService = new Feed_RSS("https://habr.com/rss/interesting/");
-            var result = await newsFeedService.GetNewsFeed();
-
-             foreach (var i in result)
+            while (exit != true)
             {
-                feed_l.Add(i);
-                sb.Append(i.Uri);
-                link = i.Uri;
+                var result = await newsFeedService.GetNewsFeed();
+
+                foreach (var i in result)
+                {
+                    feed_l.Add(i);
+                    link = i.Uri;
+                }
+
+                int fdf = feed_l.Count;
+
+               
+               
+                await Task.Delay(feed_RSS_setting.Update*100);
+                feed_l.Clear();
+                ++count;
+                Title = $"Количество апдейтов = {count}";
             }
-
-            int fdf = feed_l.Count;
-            Worker worker = new Worker();
-            worker.First_Name = $"Имя{++count}";
-            worker.Age = count + 10;
-            workers_l.Add(worker);
-           
-
-            Title = $"{workers_l.Count}";
         }
+
+        
         //private void button_start_rss_fider_Click(object sender, RoutedEventArgs e)
         //{
         //    Start_Rss_Fider();

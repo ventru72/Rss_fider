@@ -26,11 +26,12 @@
                  HorizontalAlignment="Center" Grid.RowSpan="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-
                     <StackPanel Orientation="Vertical" >
                         <TextBlock   Text="{Binding PublishDate}" FontSize="17" Foreground="#FF00FF90"/>
-                        <TextBlock >
-                           <Hyperlink Click="hyperlink_Click"><TextBlock Text="{Binding Title}" FontSize="17" Foreground="#FFF0FFAF"/> </Hyperlink> 
+                        <TextBlock>
+                             <Hyperlink x:Name="link_tb" Tag ="{Binding Uri}"  Click="hyperlink_Click">
+                                 <TextBlock x:Name ="link_text_block" Text="{Binding Title}" FontSize="17" Foreground="#FFF0FFAF"/> 
+                             </Hyperlink> 
                         </TextBlock>
 
                         <TextBlock TextWrapping="Wrap" 
@@ -38,7 +39,6 @@
                                    Foreground="White"
                                    MaxWidth="920"
                                    Text="{Binding Discription_News}"/>
-
                     </StackPanel>
                 </DataTemplate>
 
@@ -48,7 +48,6 @@
         BorderBrush="Transparent"
         Background="DarkCyan"
         VerticalAlignment="Top"
-               
         CornerRadius="4"
         Grid.Row="1"
         Grid.Column ="1"      

@@ -49,7 +49,7 @@ namespace RSS_Fider
                 deser.Serialize(stream, feed_RSS_setting);
             }
         }
-        private Feed_RSS Deser()
+        public Feed_RSS Deser()
         {
 
             string path = "setting.xml";
@@ -82,8 +82,9 @@ namespace RSS_Fider
 
             List<Instance_Feed> rssNewsItems = new List<Instance_Feed>();
             MainWindow mainWindow = new MainWindow();
-            bool exit = false;
-              using (XmlReader xmlReader = XmlReader.Create(Feed_Uri, new XmlReaderSettings() { Async = true }))
+            
+           
+                using (XmlReader xmlReader = XmlReader.Create(Feed_Uri, new XmlReaderSettings() { Async = true }))
                 {
 
                     RssFeedReader feedReader = new RssFeedReader(xmlReader);
@@ -93,18 +94,18 @@ namespace RSS_Fider
                         {
                             Instance_Feed rssItem = new Instance_Feed();
                             ISyndicationItem item = await feedReader.ReadItem();
-                            
+
                             rssItem.Discription_News = StripHTML(item.Description);
-                        //  rssItem.Discription_News = SubDiscription(item.Description);
-                        rssItem.Title = item.Title;
+                            //  rssItem.Discription_News = SubDiscription(item.Description);
+                            rssItem.Title = item.Title;
                             rssItem.Uri = item.Id;
                             rssItem.PublishDate = item.Published;
                             rssNewsItems.Add(rssItem);
                         }
                     }
-                return rssNewsItems;
+                    return rssNewsItems;
                 }
-            
+                
                 //mainWindow.Output_Rss(ref rssNewsItems);
                  
            
