@@ -21,34 +21,52 @@
                  Grid.Row="1"
                  Grid.Column ="0"
                  d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,10,0,10" 
-                 Background ="Gray" Width="950" 
+                 Background ="#FF22212D" Width="950" 
                  HorizontalContentAlignment="Left" 
                  HorizontalAlignment="Center" Grid.RowSpan="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    
+
                     <StackPanel Orientation="Vertical" >
-                        <TextBlock   Text="{Binding PublishDate}" FontSize="16" Foreground="#FF00FF90"/>
-                        <TextBlock Text="{Binding Title}" FontSize="16" Foreground="#FF040E44"/>
+                        <TextBlock   Text="{Binding PublishDate}" FontSize="17" Foreground="#FF00FF90"/>
+                        <TextBlock >
+                           <Hyperlink Click="hyperlink_Click"><TextBlock Text="{Binding Title}" FontSize="17" Foreground="#FFF0FFAF"/> </Hyperlink> 
+                        </TextBlock>
+
                         <TextBlock TextWrapping="Wrap" 
+                                   FontSize="15"
+                                   Foreground="White"
                                    MaxWidth="920"
                                    Text="{Binding Discription_News}"/>
-                       
+
                     </StackPanel>
                 </DataTemplate>
-                
+
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button x:Name="start_rss_fider" 
-                Content="Запустить" 
-                HorizontalAlignment="Center"
-                Margin="0,6,0,0" 
-                VerticalAlignment="Top" 
-                Height="44"  
-                Width="72" 
-                Click="button_start_rss_fider_Click"
-                Grid.Row="2"
-                Grid.Column ="1"/>
+        <Border BorderThickness="1"
+        BorderBrush="Transparent"
+        Background="DarkCyan"
+        VerticalAlignment="Top"
+               
+        CornerRadius="4"
+        Grid.Row="1"
+        Grid.Column ="1"      
+        Height="35"
+        Width="75"
+        Padding="2" Margin="15,10,15,0">
+            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                    x:Name="start_rss_fider"
+                    Content="Запустить"
+                    VerticalAlignment="Stretch"
+                    Grid.Row="2"
+                    Grid.Column ="1"  
+                    Click="button_start_rss_fider_Click"
+                    HorizontalAlignment="Stretch"
+                    Background="DarkCyan"
+                    Foreground="White"/>
+        </Border>
+
         <TextBlock x:Name="Head_Title" HorizontalAlignment="Left" Margin="380,0,0,0" TextWrapping="Wrap" Text="RSS Фидер Игоря мощного" VerticalAlignment="Center" TextAlignment="Center" Height="40" Width="320" FontSize="22"/>
 
     </Grid>

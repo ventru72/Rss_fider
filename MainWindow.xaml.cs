@@ -18,6 +18,7 @@ using System.Xml;
 using System.IO;
 using System.Web;
 using System.Net.Http;
+using System.Diagnostics;
 
 
 namespace RSS_Fider
@@ -30,7 +31,8 @@ namespace RSS_Fider
         ObservableCollection<Worker> workers_l = new ObservableCollection<Worker>();
         ObservableCollection<Instance_Feed> feed_l = new ObservableCollection<Instance_Feed>();
         int count = 0;
-
+        public StringBuilder sb = new StringBuilder(" ");
+        public string link = string.Empty;
         public MainWindow()
         {
             InitializeComponent();
@@ -40,17 +42,11 @@ namespace RSS_Fider
         }
        
 
-        public void Output_Rss( ref List<Instance_Feed> list_rss)
+        void hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Instance_Feed i in list_rss)
-            {
-                feed_l.Add(i);
-            }
-            
+            Process.Start(link); //открытие ссылки в браузере
+
         }
-       
-        
-       
         private async void button_start_rss_fider_Click(object sender, RoutedEventArgs e)
         {
             Feed_RSS newsFeedService = new Feed_RSS("https://habr.com/rss/interesting/");
@@ -59,6 +55,8 @@ namespace RSS_Fider
              foreach (var i in result)
             {
                 feed_l.Add(i);
+                sb.Append(i.Uri);
+                link = i.Uri;
             }
 
             int fdf = feed_l.Count;
