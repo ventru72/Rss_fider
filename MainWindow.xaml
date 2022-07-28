@@ -29,7 +29,7 @@
                     <StackPanel Orientation="Vertical" >
                         <TextBlock   Text="{Binding PublishDate}" FontSize="17" Foreground="#FF00FF90"/>
                         <TextBlock>
-                             <Hyperlink x:Name="link_tb" Tag ="{Binding Uri}"  Click="hyperlink_Click">
+                             <Hyperlink x:Name="link_tb" Tag ="{Binding Uri}"   Click="hyperlink_Click">
                                  <TextBlock x:Name ="link_text_block" Text="{Binding Title}" FontSize="17" Foreground="#FFF0FFAF"/> 
                              </Hyperlink> 
                         </TextBlock>

@@ -19,6 +19,7 @@ using System.IO;
 using System.Web;
 using System.Net.Http;
 using System.Diagnostics;
+using System.Net;
 
 
 namespace RSS_Fider
@@ -35,6 +36,7 @@ namespace RSS_Fider
         public string link = string.Empty;
         public MainWindow()
         {
+           
             InitializeComponent();
             //listRss.ItemsSource = workers_l;
             listRss.ItemsSource = feed_l;
@@ -42,17 +44,39 @@ namespace RSS_Fider
         }
 
 
-        void hyperlink_Click(object sender, RoutedEventArgs e)
+       void hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            string path = (sender as Hyperlink).Tag as string;
-            Process.Start(path); //открытие ссылки в браузере
+            try
+            {
+            //  var b = sender as Button;
+            //  b.IsEnabled = false;
+                //Feed_RSS feed_RSS_setting = new Feed_RSS();
+                //feed_RSS_setting = feed_RSS_setting.Deser();
 
+                //WebProxy wp = new WebProxy(feed_RSS_setting.Proxy_Ip, true);
+                //wp.Credentials = new NetworkCredential(feed_RSS_setting.Proxy_User, feed_RSS_setting.Proxy_Password);
+                string path = (sender as Hyperlink).Tag as string;
+                //WebRequest wrq = WebRequest.Create(path);
+                //wrq.Proxy = wp;
+                //WebResponse wrs = wrq.GetResponse();
+                
+                Process.Start(path);
+                //b.IsEnabled = true;
+            }
+            catch 
+            {
+                MessageBox.Show("Ошибка соединения, проверьте настройки прокси сервера.");
+            }
+
+          // Process.Start(path); //открытие ссылки в браузере
         }
         private async void button_start_rss_fider_Click(object sender, RoutedEventArgs e)
         {
             Feed_RSS feed_RSS_setting = new Feed_RSS();
             feed_RSS_setting = feed_RSS_setting.Deser();
             bool exit = false;
+
+
             Feed_RSS newsFeedService = new Feed_RSS("https://habr.com/rss/interesting/");
             while (exit != true)
             {
@@ -68,7 +92,7 @@ namespace RSS_Fider
 
                
                
-                await Task.Delay(feed_RSS_setting.Update*100);
+                await Task.Delay(feed_RSS_setting.Update*3600);
                 feed_l.Clear();
                 ++count;
                 Title = $"Количество апдейтов = {count}";

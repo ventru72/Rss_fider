@@ -22,6 +22,7 @@ namespace RSS_Fider
         public string Proxy_Ip { get; set; }
         public string Proxy_User { get; set; }
         public string Proxy_Password { get; set; }
+        public int Proxy_Port { get; set; }
 
 
         private readonly string Feed_Uri;
@@ -29,11 +30,12 @@ namespace RSS_Fider
         {
 
         }
-        public Feed_RSS(string Proxy_Ip, string Proxy_User, string Proxy_Password)
+        public Feed_RSS(string Proxy_Ip, string Proxy_User, string Proxy_Password, int Proxy_Port)
         {
             this.Proxy_Ip = Proxy_Ip;
             this.Proxy_User = Proxy_User;
             this.Proxy_Password = Proxy_Password;
+            this.Proxy_Port = Proxy_Port;
         }
         public Feed_RSS(string Feed_Uri)
         {
@@ -41,7 +43,7 @@ namespace RSS_Fider
         }
         public void Initializing_Settings()
         {
-            Feed_RSS feed_RSS_setting = new Feed_RSS("dfdf", "dfdf", "dfdf");
+            Feed_RSS feed_RSS_setting = new Feed_RSS();
             string path = "setting.xml";
             XmlSerializer deser = new XmlSerializer(typeof(Feed_RSS), path);
             using (Stream stream = new FileStream(path, FileMode.Create, FileAccess.Write))
@@ -74,17 +76,25 @@ namespace RSS_Fider
              Feed_RSS feed_RSS_setting = Deser();
             if (feed_RSS_setting.Update == 0) feed_RSS_setting.Update = 1;
 
-            WebProxy wp = new WebProxy(feed_RSS_setting.Proxy_Ip, true);
-            wp.Credentials = new NetworkCredential(feed_RSS_setting.Proxy_User, feed_RSS_setting.Proxy_Password);
-            WebRequest wrq = WebRequest.Create("http://www.example.com");
-            wrq.Proxy = wp;
-            //WebResponse wrs = wrq.GetResponse();
-
             List<Instance_Feed> rssNewsItems = new List<Instance_Feed>();
-            MainWindow mainWindow = new MainWindow();
-            
+
+            var webProxy = new WebProxy(feed_RSS_setting.Proxy_Ip);
+            webProxy.Credentials = new NetworkCredential(feed_RSS_setting.Proxy_User, feed_RSS_setting.Proxy_Password);
+
+            string url = Feed_Uri;
+
+            string feedString;
+            using (var webClient = new WebClient())
+            {
+                webClient.Proxy = webProxy;
+                webClient.Encoding = System.Text.Encoding.UTF8;
+                // Download the feed as a string
+                feedString = webClient.DownloadString(url);
+                
+            }
+            var stringReader = new StringReader(feedString);
            
-                using (XmlReader xmlReader = XmlReader.Create(Feed_Uri, new XmlReaderSettings() { Async = true }))
+            using (XmlReader xmlReader = XmlReader.Create(stringReader, new XmlReaderSettings() { Async = true }))
                 {
 
                     RssFeedReader feedReader = new RssFeedReader(xmlReader);
@@ -106,9 +116,6 @@ namespace RSS_Fider
                     return rssNewsItems;
                 }
                 
-                //mainWindow.Output_Rss(ref rssNewsItems);
-                 
-           
         }
     }
 }
