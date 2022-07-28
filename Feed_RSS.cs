@@ -77,6 +77,7 @@ namespace RSS_Fider
             if (feed_RSS_setting.Update == 0) feed_RSS_setting.Update = 1;
 
             List<Instance_Feed> rssNewsItems = new List<Instance_Feed>();
+            
 
             var webProxy = new WebProxy(feed_RSS_setting.Proxy_Ip);
             webProxy.Credentials = new NetworkCredential(feed_RSS_setting.Proxy_User, feed_RSS_setting.Proxy_Password);

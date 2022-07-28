@@ -48,24 +48,14 @@ namespace RSS_Fider
         {
             try
             {
-            //  var b = sender as Button;
-            //  b.IsEnabled = false;
-                //Feed_RSS feed_RSS_setting = new Feed_RSS();
-                //feed_RSS_setting = feed_RSS_setting.Deser();
-
-                //WebProxy wp = new WebProxy(feed_RSS_setting.Proxy_Ip, true);
-                //wp.Credentials = new NetworkCredential(feed_RSS_setting.Proxy_User, feed_RSS_setting.Proxy_Password);
                 string path = (sender as Hyperlink).Tag as string;
-                //WebRequest wrq = WebRequest.Create(path);
-                //wrq.Proxy = wp;
-                //WebResponse wrs = wrq.GetResponse();
-                
+               
                 Process.Start(path);
-                //b.IsEnabled = true;
+               
             }
             catch 
             {
-                MessageBox.Show("Ошибка соединения, проверьте настройки прокси сервера.");
+                MessageBox.Show("Ошибка соединения!");
             }
 
           // Process.Start(path); //открытие ссылки в браузере
@@ -75,7 +65,10 @@ namespace RSS_Fider
             Feed_RSS feed_RSS_setting = new Feed_RSS();
             feed_RSS_setting = feed_RSS_setting.Deser();
             bool exit = false;
+            try
+            {
 
+          
 
             Feed_RSS newsFeedService = new Feed_RSS("https://habr.com/rss/interesting/");
             while (exit != true)
@@ -96,6 +89,11 @@ namespace RSS_Fider
                 feed_l.Clear();
                 ++count;
                 Title = $"Количество апдейтов = {count}";
+            }
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка соединения! Проверьте настройки прокси сервера!");
             }
         }
 
