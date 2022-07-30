@@ -1,25 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.ServiceModel.Syndication;
-using System.Xml;
-using System.IO;
-using System.Web;
-using System.Net.Http;
 using System.Diagnostics;
-using System.Net;
+
 
 
 namespace RSS_Fider
@@ -36,29 +23,21 @@ namespace RSS_Fider
         public string link = string.Empty;
         public MainWindow()
         {
-           
             InitializeComponent();
-            //listRss.ItemsSource = workers_l;
             listRss.ItemsSource = feed_l;
-            
         }
-
 
        void hyperlink_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 string path = (sender as Hyperlink).Tag as string;
-               
                 Process.Start(path);
-               
             }
             catch 
             {
                 MessageBox.Show("Ошибка соединения!");
             }
-
-          // Process.Start(path); //открытие ссылки в браузере
         }
         private async void button_start_rss_fider_Click(object sender, RoutedEventArgs e)
         {
@@ -67,10 +46,7 @@ namespace RSS_Fider
             bool exit = false;
             try
             {
-
-          
-
-            Feed_RSS newsFeedService = new Feed_RSS("https://habr.com/rss/interesting/");
+            Feed_RSS newsFeedService = new Feed_RSS();
             while (exit != true)
             {
                 var result = await newsFeedService.GetNewsFeed();
@@ -82,9 +58,6 @@ namespace RSS_Fider
                 }
 
                 int fdf = feed_l.Count;
-
-               
-               
                 await Task.Delay(feed_RSS_setting.Update*3600);
                 feed_l.Clear();
                 ++count;
@@ -97,17 +70,5 @@ namespace RSS_Fider
             }
         }
 
-        
-        //private void button_start_rss_fider_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Start_Rss_Fider();
-        //    Worker worker = new Worker();
-        //    worker.First_Name = $"Имя{++count}";
-        //    worker.Age = count + 10;
-        //    workers_l.Add(worker);
-
-
-        //    Title = $"{workers_l.Count}";
-        //}
     }
 }

@@ -2,7 +2,7 @@
 <Feed_RSS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="setting.xml">
   <Feed_Uri>https://habr.com/rss/interesting/</Feed_Uri>
   <Update>5</Update>
-  <Proxy_Ip>localhost:8181</Proxy_Ip>
+  <Proxy_Ip></Proxy_Ip>
   <Proxy_User></Proxy_User>
   <Proxy_Password></Proxy_Password>
 </Feed_RSS>
