@@ -30,18 +30,18 @@
                     <StackPanel Orientation="Vertical" 
                                 Margin="0,30,0,0"
                                 >
-                        <TextBlock   Text="{Binding PublishDate}" FontSize="23" Foreground="#FF8BD7FF"/>
+                        <TextBlock   Text="{Binding PublishDate}" FontSize="21" Foreground="#FF8BD7FF"/>
                         <TextBlock TextWrapping="Wrap" Margin="0,2,0,0">
                              <Hyperlink x:Name="link_tb" Tag ="{Binding Uri}"   Click="hyperlink_Click">
                                  <TextBlock x:Name ="link_text_block"
                                             MaxWidth="1110" TextWrapping="Wrap"
-                                            Text="{Binding Title}" FontSize="22" Foreground="#FFFFE7A4"/> 
+                                            Text="{Binding Title}" FontSize="20" Foreground="#FFFFE7A4"/> 
                              </Hyperlink> 
                         </TextBlock>
 
                         <TextBlock TextWrapping="Wrap" 
                                    Margin="0,2,0,0"
-                                   FontSize="20"
+                                   FontSize="18"
                                    Foreground="White"
                                    MaxWidth="1110"
                                    Text="{Binding Discription_News}"/>

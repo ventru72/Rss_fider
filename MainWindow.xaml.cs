@@ -7,8 +7,6 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Diagnostics;
 
-
-
 namespace RSS_Fider
 {
     /// <summary>
@@ -16,17 +14,19 @@ namespace RSS_Fider
     /// </summary>
     public partial class MainWindow : Window
     {
-        ObservableCollection<Worker> workers_l = new ObservableCollection<Worker>();
+        
         ObservableCollection<Instance_Feed> feed_l = new ObservableCollection<Instance_Feed>();
         int count = 0;
-        public StringBuilder sb = new StringBuilder(" ");
-        public string link = string.Empty;
         public MainWindow()
         {
             InitializeComponent();
             listRss.ItemsSource = feed_l;
         }
-
+        /// <summary>
+        /// обработка клика по ссылке
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
        void hyperlink_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -39,6 +39,11 @@ namespace RSS_Fider
                 MessageBox.Show("Ошибка соединения!");
             }
         }
+        /// <summary>
+        /// обработка клика по кнопке
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void button_start_rss_fider_Click(object sender, RoutedEventArgs e)
         {
             Feed_RSS feed_RSS_setting = new Feed_RSS();
@@ -54,7 +59,6 @@ namespace RSS_Fider
                 foreach (var i in result)
                 {
                     feed_l.Add(i);
-                    link = i.Uri;
                 }
 
                 int fdf = feed_l.Count;

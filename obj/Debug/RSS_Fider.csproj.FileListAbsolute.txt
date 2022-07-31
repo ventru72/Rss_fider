@@ -16,3 +16,7 @@ C:\Users\masta\source\repos\RSS_Fider\RSS_Fider\obj\Debug\RSS_Fider.exe
 C:\Users\masta\source\repos\RSS_Fider\RSS_Fider\obj\Debug\RSS_Fider.pdb
 C:\Users\masta\source\repos\RSS_Fider\RSS_Fider\bin\Debug\Microsoft.SyndicationFeed.ReaderWriter.dll
 C:\Users\masta\source\repos\RSS_Fider\RSS_Fider\obj\Debug\RSS_Fider.csproj.CopyComplete
+C:\Users\masta\source\repos\RSS_Fider\RSS_Fider\bin\Debug\HtmlTextBlock.dll
+C:\Users\masta\source\repos\RSS_Fider\RSS_Fider\bin\Debug\HtmlTextBlock.pdb
+C:\Users\masta\source\repos\RSS_Fider\RSS_Fider\obj\Debug\HtmlTextBlockTest.baml
+C:\Users\masta\source\repos\RSS_Fider\RSS_Fider\obj\Debug\HtmlTextBlockTest.g.cs

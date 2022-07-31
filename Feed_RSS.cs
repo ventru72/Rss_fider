@@ -10,6 +10,7 @@ using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Rss;
 using System.IO;
 using System.Text.RegularExpressions;
+using HtmlTextBlock;
 //Install-Package Microsoft.SyndicationFeed.ReaderWriter -Version 1.0.2
 //
 namespace RSS_Fider
@@ -37,6 +38,7 @@ namespace RSS_Fider
         {
             this.Feed_Uri = Feed_Uri;
         }
+        //метод создания основы для файла настроек
         public void Initializing_Settings()
         {
             Feed_RSS feed_RSS_setting = new Feed_RSS();
@@ -47,6 +49,7 @@ namespace RSS_Fider
                 deser.Serialize(stream, feed_RSS_setting);
             }
         }
+        //метод создания чтения файла настроек
         public Feed_RSS Deser()
         {
 
@@ -58,15 +61,15 @@ namespace RSS_Fider
                 return feed_RSS_setting;
             }
         }
+        //метод убирания HTML тегов
         public static string StripHTML(string input)
         {
             return Regex.Replace(input, "<.*?>", String.Empty);
         }
-        public string SubDiscription(string str)
-        {
-           string result_str = str.Substring(3,str.IndexOf("<", 3));
-           return result_str;
-        }   
+       /// <summary>
+       /// чтение RSS, основной метод
+       /// </summary>
+       /// <returns></returns>
         public  async Task<List<Instance_Feed>>  GetNewsFeed()
         {
              Feed_RSS feed_RSS_setting = Deser();
@@ -79,7 +82,7 @@ namespace RSS_Fider
                 var webProxy = new WebProxy(feed_RSS_setting.Proxy_Ip);
                 webProxy.Credentials = new NetworkCredential(feed_RSS_setting.Proxy_User, feed_RSS_setting.Proxy_Password);
 
-                
+           
                 string feedString;
 
                 using (var webClient = new WebClient())
@@ -108,8 +111,9 @@ namespace RSS_Fider
                     {
                         Instance_Feed rssItem = new Instance_Feed();
                         ISyndicationItem item = await feedReader.ReadItem();
-
-                        rssItem.Discription_News = StripHTML(item.Description).TrimStart('\n');
+                       
+                       
+                        rssItem.Discription_News = StripHTML(item.Description).TrimStart('\r','\n');
                         //  rssItem.Discription_News = SubDiscription(item.Description);
                         rssItem.Title = item.Title;
                         rssItem.Uri = item.Id;

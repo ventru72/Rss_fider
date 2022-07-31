@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RSS_Fider
 {
-    public class Instance_Feed
+    public class Instance_Feed// класс хранения значений RSS фидера
     {
         public Instance_Feed() { }
         public Instance_Feed(string Title, string Discription_News, DateTimeOffset PublishDate, string Uri)
